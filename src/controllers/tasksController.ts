@@ -48,3 +48,32 @@ export const fetchSingleTask = (
     task: foundTask,
   });
 };
+
+/**
+ * @description Creates a new task and adds it to the tasks array.
+ */
+export const createTask = (req: Request, res: Response, next: NextFunction) => {
+  // 1a) Extract the 'name' property from the request body
+  const { name } = req.body;
+
+  // 1b) Check if 'name' is provided, return an error if not
+  if (!name) {
+    return next(new AppError("Please provide the name for this task!", 400));
+  }
+
+  // 2) Create a new task with an incremented ID, provided name, and 'completed' set to false
+  const newTask: Task = {
+    id: tasks.length + 1,
+    name,
+    completed: false,
+  };
+
+  // 3) Add the new task to the tasks array
+  tasks.push(newTask);
+
+  // 4) Respond with a success message and the updated tasks array
+  res.status(201).json({
+    message: "success",
+    tasks,
+  });
+};

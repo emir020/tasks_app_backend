@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
@@ -10,6 +10,9 @@ import AppError from "./utils/appError";
 dotenv.config();
 
 const app = express();
+
+// Parse request body
+app.use(express.json());
 
 // Enable simple request logs in development environment
 if (process.env.NODE_ENV === "development") {
