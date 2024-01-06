@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import tasks from "../tasks";
 import { Task } from "../types";
+import AppError from "../utils/appError";
 
 /**
  * @description Fetches tasks and sends a JSON
@@ -18,7 +19,11 @@ export const fetchTasks = (req: Request, res: Response) => {
  * @description Fetches a single task by ID
  * and sends a JSON response with the task details.
  */
-export const fetchSingleTask = (req: Request, res: Response) => {
+export const fetchSingleTask = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   // 1a) Extract the task ID from the request parameters
   const id: string = req.params?.id;
 
@@ -32,7 +37,9 @@ export const fetchSingleTask = (req: Request, res: Response) => {
 
   // 2b) If no task is found, throw an error
   if (!foundTask) {
-    throw new Error(`Task with provided id: ${id} does not exist!`);
+    return next(
+      new AppError(`Task with provided id: ${id} does not exist!`, 404)
+    );
   }
 
   // 3) Send a JSON response with the success message and the found task
