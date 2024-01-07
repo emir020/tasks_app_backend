@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
 
 import globalErrorHandler from "./controllers/errorController";
 import tasksRouter from "./routers/tasksRouter";
@@ -10,6 +11,13 @@ import AppError from "./utils/appError";
 dotenv.config();
 
 const app = express();
+
+// Cors
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // Parse request body
 app.use(express.json());
