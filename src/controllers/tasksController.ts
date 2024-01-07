@@ -104,3 +104,36 @@ export const deleteTask = (req: Request, res: Response, next: NextFunction) => {
     message: "success",
   });
 };
+
+/**
+ * @description Update a task with the specified ID.
+ */
+export const updateTask = (req: Request, res: Response, next: NextFunction) => {
+  // 1a) Extract task ID from request parameters
+  const id: string = req.params?.id;
+
+  // 1b) Extract fields to be updated from the request body
+  const updatedFields: Partial<Task> = req.body;
+
+  // 1c) Check if ID is provided; if not, return early
+  if (!id) {
+    return;
+  }
+
+  // 2a) Find the index of the task with the given ID
+  const taskIndex = tasks.findIndex((task: Task) => task.id === +id);
+
+  // 2b) If task with the given ID is not found, return an error
+  if (taskIndex === -1) {
+    return next(new AppError("There was a problem updating this task!", 400));
+  }
+
+  // 3) Update task fields dynamically based on provided properties
+  tasks[taskIndex] = { ...tasks[taskIndex], ...updatedFields };
+
+  // 4) Send a success response with updated tasks
+  res.status(200).json({
+    message: "success",
+    tasks,
+  });
+};
