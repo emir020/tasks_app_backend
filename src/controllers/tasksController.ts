@@ -77,3 +77,30 @@ export const createTask = (req: Request, res: Response, next: NextFunction) => {
     tasks,
   });
 };
+
+/**
+ * @description Delete a task with the specified ID.
+ */
+export const deleteTask = (req: Request, res: Response, next: NextFunction) => {
+  // 1a) Extract task ID from request parameters
+  const id: string = req.params?.id;
+
+  // 1b) Check if the ID is provided
+  if (!id) return;
+
+  // 2a) Find the index of the task with the specified ID
+  const taskIndex: number = tasks.findIndex((task: Task) => task.id === +id);
+
+  // 2b) Check if the task with the specified ID exists
+  if (taskIndex === -1) {
+    return next(new AppError("There was a problem deleting this task!", 400));
+  }
+
+  // 3) Remove the task from the tasks array
+  tasks.splice(taskIndex, 1);
+
+  // 4) Return success response
+  res.status(204).json({
+    message: "success",
+  });
+};

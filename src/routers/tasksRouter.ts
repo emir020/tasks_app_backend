@@ -7,6 +7,9 @@ router
   .get(tasksController.fetchTasks)
   .post(tasksController.createTask);
 
-router.route("/:id").get(tasksController.fetchSingleTask);
+router
+  .route("/:id")
+  .get(tasksController.fetchSingleTask)
+  .delete(tasksController.deleteTask);
 
 export default router;
