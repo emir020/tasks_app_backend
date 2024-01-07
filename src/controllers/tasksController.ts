@@ -67,7 +67,7 @@ export const createTask = (req: Request, res: Response, next: NextFunction) => {
     name,
     completed: false,
     description,
-    dueDate: new Date().toLocaleDateString(),
+    dueDate: dueDate ? dueDate : new Date().toLocaleDateString(),
   };
 
   // 3) Add the new task to the tasks array
