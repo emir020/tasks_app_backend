@@ -54,11 +54,11 @@ export const fetchSingleTask = (
  */
 export const createTask = (req: Request, res: Response, next: NextFunction) => {
   // 1a) Extract the 'name' property from the request body
-  const { name } = req.body;
+  const { name, description, dueDate } = req.body;
 
   // 1b) Check if 'name' is provided, return an error if not
   if (!name) {
-    return next(new AppError("Please provide the name for this task!", 400));
+    return next(new AppError("Please provide the title for this task!", 400));
   }
 
   // 2) Create a new task with an incremented ID, provided name, and 'completed' set to false
@@ -66,6 +66,8 @@ export const createTask = (req: Request, res: Response, next: NextFunction) => {
     id: tasks.length + 1,
     name,
     completed: false,
+    description,
+    dueDate: new Date().toLocaleDateString(),
   };
 
   // 3) Add the new task to the tasks array
