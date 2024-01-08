@@ -42,6 +42,7 @@ Before you begin, make sure you have Node.js and npm installed on your machine.
   ```
 
 The backend should now be running at **`http://localhost:8000`**.
+API documentation is available at: https://documenter.getpostman.com/view/20201846/2s9YsJArkX
 
 ## **Conclusion**
 
