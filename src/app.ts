@@ -5,6 +5,7 @@ import cors from "cors";
 
 import globalErrorHandler from "./controllers/errorController";
 import tasksRouter from "./routers/tasksRouter";
+import usersRouter from "./routers/usersRouter";
 import AppError from "./utils/appError";
 
 // Initialize .env
@@ -29,6 +30,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Routers
 app.use("/api/v1/tasks", tasksRouter);
+app.use("/api/v1/users", usersRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Cannot find ${req.originalUrl} on this server!`, 404));
