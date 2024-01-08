@@ -16,7 +16,7 @@ const createSendToken = (
   req: Request,
   res: Response
 ) => {
-  // Generate a JWT using the provided email
+  // Generate a JWT using the provided email!
   const token = signToken(email);
 
   // Set the JWT as a cookie in the client's browser
